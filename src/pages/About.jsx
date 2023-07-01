@@ -1,8 +1,16 @@
-import { A } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import { Motion } from "@motionone/solid";
 import NavBar from "../components/NavBar";
+import { isAuthenticated, setError } from "../../public/js/store";
 
 const About = () => {
+  const navigate = useNavigate();
+
+  //? Check if user is authenticated. If not redirect to login page
+  if (!isAuthenticated()) {
+    setError("You are not logged in!!");
+    return navigate("/login", { replace: true });
+  }
   return (
     <>
       <Motion
@@ -16,9 +24,7 @@ const About = () => {
           <p class="text-center text-xl font-light max-w-[600px]">
             decided to make a website
           </p>
-          <A
-            href="/home"
-            class="text-xs underline">
+          <A href="/home" class="text-xs underline">
             GO TO HOMEPAGE
           </A>
         </div>

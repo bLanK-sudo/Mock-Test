@@ -1,9 +1,18 @@
 import { BsCheckCircleFill } from "solid-icons/bs";
 import NavBar from "../components/NavBar";
+import { useNavigate } from "@solidjs/router";
+import { isAuthenticated, setError } from "../../public/js/store";
 
 const Contact = () => {
-    let copied1 
-    let copied2
+  const navigate = useNavigate();
+
+  //? Check if user is authenticated. If not redirect to login page
+  if (!isAuthenticated()) {
+    setError("You are not logged in!!");
+    return navigate("/login", { replace: true });
+  }
+  let copied1;
+  let copied2;
   const copyToClipBoard = (copyText, num) => {
     // For mobile devices
     console.log(copyText.innerText);
@@ -12,8 +21,8 @@ const Contact = () => {
     // Alert the copied text
     copied1.classList.remove("hidden");
     setTimeout(() => {
-        copied1.classList.add("hidden");
-    }, 3000)
+      copied1.classList.add("hidden");
+    }, 3000);
   };
 
   return (

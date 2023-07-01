@@ -2,6 +2,7 @@ import { useNavigate } from "@solidjs/router";
 import { fetchAns, fetchTest } from "../api/fetchGet";
 import NavBar from "../components/NavBar";
 import { createSignal } from "solid-js";
+import { isAuthenticated, setError } from "../../public/js/store";
 
 const qnType = (e) => {
   if (e == "SCQ") return "radio";
@@ -12,6 +13,12 @@ const qnType = (e) => {
 };
 
 const Test = (id) => {
+
+  const navigate = useNavigate();
+  if (!isAuthenticated()) {
+    setError("You are not logged in!!");
+    return navigate("/login", { replace: true });
+  }
   const [test, setTest] = createSignal(null);
   const [qnId, setqnId] = createSignal([]);
   const [result, setResult] = createSignal(null);
@@ -43,7 +50,6 @@ const Test = (id) => {
       ? hours + "hrs" + minutes + " mins" + seconds + " secs" + milliseconds
       : minutes + " mins" + seconds + " secs" + milliseconds;
   };
-  const navigate = useNavigate();
   return (
     <>
       <NavBar />
