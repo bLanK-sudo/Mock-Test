@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Donate from './pages/Donate';
 
 
 
@@ -43,6 +44,7 @@ render(
       <Route path="/profile" component={Profile} />
       <Route path="/test/:id" component={Test} />
       <Route path="/contact" component={Contact} />
+      <Route path="/donate" component={Donate} />
     </Routes>
   </Router>
   

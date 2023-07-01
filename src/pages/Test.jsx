@@ -13,7 +13,6 @@ const qnType = (e) => {
 };
 
 const Test = (id) => {
-
   const navigate = useNavigate();
   if (!isAuthenticated()) {
     setError("You are not logged in!!");
@@ -47,8 +46,8 @@ const Test = (id) => {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
     return hours
-      ? hours + "hrs" + minutes + " mins" + seconds + " secs" + milliseconds
-      : minutes + " mins" + seconds + " secs" + milliseconds;
+      ? hours + " hrs " + minutes + " mins " + seconds + " secs"
+      : minutes + " mins " + seconds + " secs ";
   };
   return (
     <>
@@ -416,7 +415,7 @@ const Test = (id) => {
               <div class="card-title flex-col items-start">
                 <p>Attempted : {count}</p>
                 <p>Not Attempted : {qnId().length - count} </p>
-                <p>Total Time Taken in ms : {msToTime(fullTime)}</p>
+                <p>Total Time : {msToTime(fullTime)}</p>
 
                 <p class="flex gap-2">
                   Score :
