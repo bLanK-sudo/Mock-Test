@@ -116,6 +116,12 @@ const Test = (id) => {
                                   ).innerText = "SAVE";
                                   document
                                     .getElementsByName(qn.id)[0]
+                                    .classList.remove(
+                                      "bg-success",
+                                      "text-success-content"
+                                    );
+                                  document
+                                    .getElementsByName(qn.id)[0]
                                     .classList.add(
                                       "bg-error",
                                       "text-error-content"
@@ -140,6 +146,12 @@ const Test = (id) => {
                                   document.getElementById(
                                     "save" + qn.id
                                   ).innerText = "SAVE";
+                                  document
+                                    .getElementsByName(qn.id)[0]
+                                    .classList.remove(
+                                      "bg-success",
+                                      "text-success-content"
+                                    );
                                   document
                                     .getElementsByName(qn.id)[0]
                                     .classList.add(
@@ -169,6 +181,12 @@ const Test = (id) => {
                                           document.getElementById(
                                             "save" + qn.id
                                           ).innerText = "SAVE";
+                                          document
+                                            .getElementsByName(qn.id)[0]
+                                            .classList.remove(
+                                              "bg-success",
+                                              "text-success-content"
+                                            );
                                           document
                                             .getElementsByName(qn.id)[0]
                                             .classList.add(
@@ -208,6 +226,12 @@ const Test = (id) => {
                                           document.getElementById(
                                             "save" + qn.id
                                           ).innerText = "SAVE";
+                                          document
+                                            .getElementsByName(qn.id)[0]
+                                            .classList.remove(
+                                              "bg-success",
+                                              "text-success-content"
+                                            );
                                           document
                                             .getElementsByName(qn.id)[0]
                                             .classList.add(
@@ -332,7 +356,7 @@ const Test = (id) => {
         <div class="card m-2 bg-base-300 col-span-1">
           <h2 class="p-4">Question Numbers</h2>
           <hr class="border border-accent" />
-          <div class="card-body">
+          <div class="card-body justify-between">
             <div class="grid grid-cols-4 gap-4">
               <Show
                 when={qnId()}

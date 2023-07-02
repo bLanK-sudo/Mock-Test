@@ -78,7 +78,6 @@ const Contact = () => {
                   <label htmlFor="desc">Description</label>
                   <textarea
                     class="textarea textarea-accent w-full"
-                    placeholder="Description"
                     rows="5"
                     required></textarea>
                 </div>
@@ -88,7 +87,6 @@ const Contact = () => {
                     type="file"
                     class="file-input file-input-bordered file-input-accent w-full "
                     accept="image/*"
-                    required
                   />
                 </div>
                 <button class="btn btn-success w-full" type="submit">
@@ -121,7 +119,6 @@ const Contact = () => {
                   <label htmlFor="desc">Description</label>
                   <textarea
                     class="textarea textarea-accent w-full"
-                    placeholder="Description"
                     rows="5"
                     required></textarea>
                 </div>
@@ -131,7 +128,6 @@ const Contact = () => {
                     type="file"
                     class="file-input file-input-bordered file-input-accent w-full "
                     accept="image/*"
-                    required
                   />
                 </div>
                 <button class="btn btn-success w-full" type="submit">

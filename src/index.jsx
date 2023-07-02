@@ -14,6 +14,8 @@ import Signup from './pages/Signup';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Donate from './pages/Donate';
+import Subjects from './pages/Subjects';
+import Exams from './pages/Exams';
 
 
 
@@ -45,6 +47,10 @@ render(
       <Route path="/test/:id" component={Test} />
       <Route path="/contact" component={Contact} />
       <Route path="/donate" component={Donate} />
+      <Route path="/subjects" component={Subjects} />
+      <Route path="/subjects/:id" component={Subjects} />
+      <Route path="/exams" component={Exams} />
+      <Route path="/exams/:id" component={Exams} />
     </Routes>
   </Router>
   

@@ -1,10 +1,11 @@
 import ComingSoon from "../components/ComingSoon"
 
+const Subjects = () => {
 
-const Donate = () => {
+
     return(
-    <ComingSoon />
+        <ComingSoon />
     )
 }
 
-export default Donate
+export default Subjects

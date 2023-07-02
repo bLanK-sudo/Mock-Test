@@ -8,16 +8,16 @@ import {
   user,
 } from "../../public/js/store";
 import { fetchUser } from "../api/fetchGet";
+import { createEffect } from "solid-js";
 
 const Mock = () => {
-  fetchUser();
+  
   const navigate = useNavigate();
   if (!isAuthenticated()) {
     setError("You are not logged in!!");
     return navigate("/login", { replace: true });
   }
-
-  console.log(user());
+  fetchUser();
   return (
     <>
       <Motion
@@ -32,7 +32,7 @@ const Mock = () => {
                 when={user()}
                 fallback={
                   <>
-                    <div class="grid grid-cols-2 w-[90vw] justify-center items-center gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 w-full h-full justify-center items-center gap-4">
                       <span class="h-32 w-full inline-block bg-base-300 rounded-full animate-pulse"></span>
                       <span class="h-32 w-full inline-block bg-base-300 rounded-full animate-pulse"></span>
                     </div>
@@ -79,7 +79,13 @@ const Mock = () => {
                   <div class="flex gap-4 flex-wrap">
                     <For each={user().courses}>
                       {(course) => {
-                        return <div class="btn w-max px-8">{course.name}</div>;
+                        return (
+                          <A
+                            href={`/subjects/${course.id}`}
+                            class="btn w-max px-8">
+                            {course.name}
+                          </A>
+                        );
                       }}
                     </For>
                   </div>
@@ -98,9 +104,15 @@ const Mock = () => {
               <hr class="border border-accent-content" />
               <div class="card-body">
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                  <div class="btn w-full">Quiz 1</div>
-                  <div class="btn w-full">Quiz 2</div>
-                  <div class="btn w-full">End Term</div>
+                  <A href="/exams/q1" class="btn w-full">
+                    Quiz 1
+                  </A>
+                  <A href="/exams/q2" class="btn w-full">
+                    Quiz 2
+                  </A>
+                  <A href="/exams/endterm" class="btn w-full">
+                    End Term
+                  </A>
                 </div>
                 <div class="card-actions justify-end">
                   <A href="/exams" class="link">

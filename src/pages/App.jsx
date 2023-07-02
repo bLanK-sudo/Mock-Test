@@ -11,7 +11,7 @@ import {
 } from "../../public/js/store";
 
 const App = () => {
-  fetchUser();
+  
   const navigate = useNavigate();
 
   //? Check if user is authenticated. If not redirect to login page
@@ -19,6 +19,7 @@ const App = () => {
     setError("You are not logged in!!");
     return navigate("/login", { replace: true });
   }
+  fetchUser();
   return (
     <>
       <Motion
@@ -28,19 +29,21 @@ const App = () => {
         <div class="flex flex-col pb-24">
           <div class="card bg-primary text-primary-content m-2">
             <div class="card-body">
-              <Show
-                when={user()}
-                fallback={
-                  <>
-                    <div class="flex flex-col justify-center items-center gap-4">
-                      <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
-                    </div>
-                  </>
-                }>
-                <h2 class="card-title font-montserrat font-bold text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl">
-                  Welcome {user().username}
-                </h2>
-              </Show>
+              <div class="card-title font-montserrat font-bold text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl">
+                Welcome
+                <Show
+                  when={user()}
+                  fallback={
+                    <>
+                      <div class="flex flex-col justify-center items-center gap-4">
+                        <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                      </div>
+                    </>
+                  }>
+                  {" "}
+                  {user().username}
+                </Show>
+              </div>
               {/* //!Change Content */}
               <p class="pl-2">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -82,8 +85,8 @@ const App = () => {
               <div class="card-body">
                 {/* //!Change Content */}
                 <p class="pl-2">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis, natus.
+                  We would love to hear your FeedBack on our website. If you
+                  want to report an error, visit the Contact page or click on view more below.
                 </p>
                 <div class="card-actions justify-end">
                   <A href="/contact" class="link">

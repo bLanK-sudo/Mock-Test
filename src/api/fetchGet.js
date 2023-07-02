@@ -4,7 +4,6 @@ import { setError, setUser } from "../../public/js/store";
 
 export const fetchUser = async () => {
     try{
-        console.log("fetching user");
         const current_user = await fetch("https://abulaman.pythonanywhere.com/profile/", {
         headers: {
         "Content-Type": "application/json",
