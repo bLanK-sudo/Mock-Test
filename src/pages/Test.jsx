@@ -1,7 +1,7 @@
 import { useNavigate } from "@solidjs/router";
 import { fetchAns, fetchTest } from "../api/fetchGet";
 import NavBar from "../components/NavBar";
-import { createSignal } from "solid-js";
+import { Show, createSignal } from "solid-js";
 import { isAuthenticated, setError } from "../../public/js/store";
 
 const qnType = (e) => {
@@ -22,10 +22,11 @@ const Test = (id) => {
   const [qnId, setqnId] = createSignal([]);
   const [result, setResult] = createSignal(null);
   const [submit, setSubmit] = createSignal(false);
-  const [start, showStart] = createSignal(true);
+  const [start, showStart] = createSignal(false);
   const [all, setAll] = createSignal(false);
   const [completed, setCompleted] = createSignal(0);
   const [notCompleted, setNotCompleted] = createSignal(0);
+  const [totalTime, setTotalTime] = createSignal(0);
   const [startTimer, setStartTimer] = createSignal(0);
   const [currentQn, setCurrentQn] = createSignal(0);
   const selected = {};
@@ -35,7 +36,11 @@ const Test = (id) => {
   let ansDiv;
   fetchTest(setqnId, setTest, test, qn);
   let count = 0;
+  let startingTime = Date.now();
   let fullTime = Date.now();
+  setInterval(() => {
+    setTotalTime(Date.now() - startingTime);
+  },1000)
   const msToTime = (duration) => {
     var milliseconds = Math.floor((duration % 1000) / 100),
       seconds = Math.floor((duration / 1000) % 60),
@@ -46,8 +51,23 @@ const Test = (id) => {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
     return hours
-      ? hours + " hrs " + minutes + " mins " + seconds + " secs"
-      : minutes + " mins " + seconds + " secs ";
+      ? hours > 1
+        ? hours +
+          " hrs " +
+          minutes +
+          (minutes > 1 ? " mins " : " min ") +
+          seconds +
+          (seconds > 0 ? " secs" : " sec ")
+        : hours +
+          " hr " +
+          minutes +
+          (minutes > 1 ? " mins " : " min ") +
+          seconds +
+          (seconds > 0 ? " secs" : " sec ")
+      : minutes +
+          (minutes > 1 ? " mins " : " min ") +
+          seconds +
+          (seconds > 0 ? " secs" : " sec ");
   };
   return (
     <>
@@ -78,93 +98,118 @@ const Test = (id) => {
           </div>
         </div>
       )}
-
-      <div class="flex flex-col lg:grid lg:grid-cols-3">
-        <Show when={test()} fallback={<>What the hell is happening</>}>
-          <For each={test().test_questions}>
+      <div class="card bg-accent text-accent-content p-4 m-2">
+        <div class="flex justify-between items-center">
+          <h3 class="font-bold text-sm md:text-xl font-archivo">
+            Machine Learning Foundations
+          </h3>
+          <button class="text-sm md:btn">{msToTime(totalTime())}</button>
+        </div>
+      </div>
+      <div class="flex flex-col lg:grid lg:grid-cols-3 mb-24">
+        <Show when={test()} fallback={<>Loading....</>}>
+          <For each={test().questions}>
             {(qn, i) => {
               return (
                 <>
                   <div
                     ref={mainQnDiv}
-                    class={`qns qns${qn.id} card m-2 bg-base-300 col-span-2 ${
+                    class={`qns qns${
+                      qn.qn_no
+                    } card m-2 bg-base-300 col-span-2 ${
                       i() != 0 ? "hidden" : ""
                     }`}>
                     <div class="flex justify-between p-4">
                       <h2>Question {i() + 1}</h2>
-                      <p>Marks : {qn.question.marks}</p>
+                      <p>Marks : {qn.marks}</p>
                     </div>
                     <hr class="border border-accent" />
                     <div class="card-body">
                       <div class="card-actions flex-col">
                         <div class="card-title flex-col items-start">
-                          <p> {qn.question.text} </p>
-                          <div ref={ansDiv} class="form-control">
-                            {qn.question.type == "Numeric" && (
+                          {qn.images && (
+                            <For each={qn.images}>
+                              {(img) => {
+                                return (
+                                  <>
+                                    <img src={img} class="cursor-pointer p-2 bg-white rounded-lg" />
+                                  </>
+                                );
+                              }}
+                            </For>
+                          )}
+                          <p class="p-2">
+                            {qn.text == null ? "null" : qn.text}
+                          </p>
+                          <div
+                            ref={ansDiv}
+                            class="form-control flex flex-col gap-4"
+                            id={`form${qn.qn_no}`}>
+                            {qn.type == "Numeric" && (
                               <input
                                 class="input input-bordered input-accent"
                                 type="number"
                                 onChange={(el) => {
                                   document
-                                    .getElementById("save" + qn.id)
+                                    .getElementById("save" + qn.qn_no)
                                     .classList.remove(
                                       "bg-success",
                                       "text-success-content"
                                     );
                                   document.getElementById(
-                                    "save" + qn.id
+                                    "save" + qn.qn_no
                                   ).innerText = "SAVE";
                                   document
-                                    .getElementsByName(qn.id)[0]
+                                    .getElementsByName(qn.qn_no)[0]
                                     .classList.remove(
                                       "bg-success",
                                       "text-success-content"
                                     );
                                   document
-                                    .getElementsByName(qn.id)[0]
+                                    .getElementsByName(qn.qn_no)[0]
                                     .classList.add(
                                       "bg-error",
                                       "text-error-content"
                                     );
                                   console.log("ur reverting");
                                 }}
-                                name={"q" + qn.id}
-                                id={qn.question.id}
+                                name={"q" + qn.qn_no}
+                                id={qn.id}
                               />
                             )}
-                            {qn.question.type == "Text" && (
+                            {qn.type == "Text" && (
                               <input
                                 class="input input-bordered input-accent"
                                 type="text"
                                 onChange={(el) => {
                                   document
-                                    .getElementById("save" + qn.id)
+                                    .getElementById("save" + qn.qn_no)
                                     .classList.remove(
                                       "bg-success",
                                       "text-success-content"
                                     );
                                   document.getElementById(
-                                    "save" + qn.id
+                                    "save" + qn.qn_no
                                   ).innerText = "SAVE";
                                   document
-                                    .getElementsByName(qn.id)[0]
+                                    .getElementsByName(qn.qn_no)[0]
                                     .classList.remove(
                                       "bg-success",
                                       "text-success-content"
                                     );
                                   document
-                                    .getElementsByName(qn.id)[0]
+                                    .getElementsByName(qn.qn_no)[0]
                                     .classList.add(
                                       "bg-error",
                                       "text-error-content"
                                     );
                                   console.log("ur reverting");
                                 }}
-                                name={"q" + qn.id}
-                                id={qn.question.id}
+                                name={"q" + qn.qn_no}
+                                id={qn.qn_no}
                               />
                             )}
-                            {qn.question.type == "SCQ" && (
+                            {qn.type == "SCQ" && (
                               <For each={qn.choices}>
                                 {(ans, i) => {
                                   return (
@@ -173,22 +218,22 @@ const Test = (id) => {
                                         class="radio radio-accent"
                                         onChange={(el) => {
                                           document
-                                            .getElementById("save" + qn.id)
+                                            .getElementById("save" + qn.qn_no)
                                             .classList.remove(
                                               "bg-success",
                                               "text-success-content"
                                             );
                                           document.getElementById(
-                                            "save" + qn.id
+                                            "save" + qn.qn_no
                                           ).innerText = "SAVE";
                                           document
-                                            .getElementsByName(qn.id)[0]
+                                            .getElementsByName(qn.qn_no)[0]
                                             .classList.remove(
                                               "bg-success",
                                               "text-success-content"
                                             );
                                           document
-                                            .getElementsByName(qn.id)[0]
+                                            .getElementsByName(qn.qn_no)[0]
                                             .classList.add(
                                               "bg-error",
                                               "text-error-content"
@@ -196,20 +241,49 @@ const Test = (id) => {
                                         }}
                                         type="radio"
                                         id={ans.id}
-                                        name={"q" + qn.id}
+                                        name={"q" + qn.qn_no}
                                         value={ans.id}
                                       />
-                                      <label
-                                        class="w-16 min-w-max cursor-pointer"
-                                        for={ans.id}>
-                                        {ans.choice}
-                                      </label>
+
+                                      {ans.image ? (
+                                        ans.image instanceof Array ? (
+                                          <For each={ans.image}>
+                                            {(img) => {
+                                              <label
+                                                for={ans.id}
+                                                class="cursor-pointer">
+                                                {" "}
+                                                <img
+                                                  src={img}
+                                                  class="  p-2 bg-white rounded-lg"
+                                                />
+                                              </label>;
+                                            }}
+                                          </For>
+                                        ) : (
+                                          <label
+                                            for={ans.id}
+                                            class="cursor-pointer">
+                                            {" "}
+                                            <img
+                                              src={ans.image}
+                                              class=" p-2 bg-white rounded-lg"
+                                            />
+                                          </label>
+                                        )
+                                      ) : (
+                                        <label
+                                          class="w-16 min-w-max cursor-pointer p-2"
+                                          for={ans.id}>
+                                          {ans.text == null ? "null" : ans.text}
+                                        </label>
+                                      )}
                                     </div>
                                   );
                                 }}
                               </For>
                             )}
-                            {qn.question.type == "MCQ" && (
+                            {qn.type == "MCQ" && (
                               <For each={qn.choices}>
                                 {(ans, i) => {
                                   return (
@@ -218,37 +292,65 @@ const Test = (id) => {
                                         class="checkbox checkbox-accent"
                                         onChange={(el) => {
                                           document
-                                            .getElementById("save" + qn.id)
+                                            .getElementById("save" + qn.qn_no)
                                             .classList.remove(
                                               "bg-success",
                                               "text-success-content"
                                             );
                                           document.getElementById(
-                                            "save" + qn.id
+                                            "save" + qn.qn_no
                                           ).innerText = "SAVE";
                                           document
-                                            .getElementsByName(qn.id)[0]
+                                            .getElementsByName(qn.qn_no)[0]
                                             .classList.remove(
                                               "bg-success",
                                               "text-success-content"
                                             );
                                           document
-                                            .getElementsByName(qn.id)[0]
+                                            .getElementsByName(qn.qn_no)[0]
                                             .classList.add(
                                               "bg-error",
                                               "text-error-content"
                                             );
                                         }}
                                         type="checkbox"
-                                        id={"scq" + ans.id}
-                                        name={"q" + qn.id}
+                                        id={"mcq" + ans.id}
+                                        name={"q" + qn.qn_no}
                                         value={ans.id}
                                       />
-                                      <label
-                                        class="w-16 min-w-max cursor-pointer"
-                                        for={"scq" + ans.id}>
-                                        {ans.choice}
-                                      </label>
+                                      {ans.image ? (
+                                        ans.image instanceof Array ? (
+                                          <For each={ans.image}>
+                                            {(img) => {
+                                              <label
+                                                for={"mcq" + ans.id}
+                                                class="cursor-pointer">
+                                                {" "}
+                                                <img
+                                                  src={img}
+                                                  class=" p-2 bg-white rounded-lg"
+                                                />
+                                              </label>;
+                                            }}
+                                          </For>
+                                        ) : (
+                                          <label
+                                            for={"mcq" + ans.id}
+                                            class="cursor-pointer">
+                                            {" "}
+                                            <img
+                                              src={ans.image}
+                                              class=" p-2 bg-white rounded-lg"
+                                            />
+                                          </label>
+                                        )
+                                      ) : (
+                                        <label
+                                          class="w-16 min-w-max cursor-pointer p-2"
+                                          for={ans.id}>
+                                          {ans.text == null ? "null" : ans.text}
+                                        </label>
+                                      )}
                                     </div>
                                   );
                                 }}
@@ -257,28 +359,28 @@ const Test = (id) => {
                           </div>
                         </div>
                         <button
-                          id={"save" + qn.id}
+                          id={"save" + qn.qn_no}
                           onClick={(e) => {
-                            let ans = e.target.previousSibling.children;
+                            let ans = document.getElementById(`form${qn.qn_no}`);
                             console.log(ans);
                             let ansArr;
 
                             if (qn.type == "Text") {
                               ansArr = "";
-                              ansArr = ans[1].children[0].value;
+                              ansArr = ans.children[0].value;
                             } else if (qn.type == "Numeric") {
                               ansArr = "";
-                              ansArr = ans[1].children[0].value;
+                              ansArr = ans.children[0].value;
                             } else {
                               ansArr = [];
-                              Object.values(ans[1].children).forEach((el) => {
+                              Object.values(ans.children).forEach((el) => {
                                 if (el.childNodes[0].checked) {
                                   console.log(el.childNodes[0]);
                                   ansArr.push(el.childNodes[0].value);
                                 }
                               });
                             }
-                            selected[qn.id] = ansArr;
+                            selected[qn.qn_no] = ansArr;
                             let flag = true;
                             qnId().forEach((el) => {
                               if (
@@ -290,7 +392,7 @@ const Test = (id) => {
                             setAll(flag);
                             if (
                               (qn.type == "MCQ" || qn.type == "SCQ") &&
-                              selected[qn.id].length > 0
+                              selected[qn.qn_no].length > 0
                             ) {
                               e.target.classList.add(
                                 "bg-success",
@@ -298,13 +400,13 @@ const Test = (id) => {
                               );
                               e.target.innerText = "SAVED";
                               document
-                                .getElementsByName(qn.id)[0]
+                                .getElementsByName(qn.qn_no)[0]
                                 .classList.remove(
                                   "bg-error",
                                   "text-error-content"
                                 );
                               document
-                                .getElementsByName(qn.id)[0]
+                                .getElementsByName(qn.qn_no)[0]
                                 .classList.add(
                                   "bg-success",
                                   "text-success-content"
@@ -316,13 +418,13 @@ const Test = (id) => {
                               e.target.classList.add("bg-success");
                               e.target.innerText = "SAVED";
                               document
-                                .getElementsByName(qn.id)[0]
+                                .getElementsByName(qn.qn_no)[0]
                                 .classList.remove(
                                   "bg-error",
                                   "text-error-content"
                                 );
                               document
-                                .getElementsByName(qn.id)[0]
+                                .getElementsByName(qn.qn_no)[0]
                                 .classList.add(
                                   "bg-success",
                                   "text-success-content"
@@ -335,7 +437,7 @@ const Test = (id) => {
                                 "text-success-content"
                               );
                               document
-                                .getElementsByName(qn.id)[0]
+                                .getElementsByName(qn.qn_no)[0]
                                 .classList.add("bg-error");
                               setTimeout(() => {
                                 e.target.innerText = "SAVE";
@@ -407,11 +509,9 @@ const Test = (id) => {
             </div>
             <div class="card-actions justify-end">
               <button
-                class={`btn btn-error px-16 ${
-                  all() ? "bg-success" : "bg-error"
-                }`}
+                class={`btn px-16 ${all() ? "bg-success" : "bg-error"}`}
                 onClick={() => {
-                  fullTime = Date.now() - fullTime;
+                  fullTime = Date.now() - startingTime;
                   setSubmit(true);
                   if (timer[currentQn()]) {
                     timer[currentQn()] += Date.now() - startTimer();

@@ -8,10 +8,8 @@ import {
   user,
 } from "../../public/js/store";
 import { fetchUser } from "../api/fetchGet";
-import { createEffect } from "solid-js";
 
 const Mock = () => {
-  
   const navigate = useNavigate();
   if (!isAuthenticated()) {
     setError("You are not logged in!!");

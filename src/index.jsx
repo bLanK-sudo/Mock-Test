@@ -16,6 +16,7 @@ import Contact from './pages/Contact';
 import Donate from './pages/Donate';
 import Subjects from './pages/Subjects';
 import Exams from './pages/Exams';
+import Forgot from './pages/Forgot';
 
 
 
@@ -39,6 +40,7 @@ render(
       <Route path="*" component={Page404} />
       <Route path="/" component={Landing} />
       <Route path="/login" component={Login} />
+      <Route path="/forgot_pwd" component={Forgot} />
       <Route path="/signup" component={Signup} />
       <Route path="/home" component={App} />
       <Route path="/about" component={About} />
