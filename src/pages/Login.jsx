@@ -3,6 +3,7 @@ import { Motion } from "@motionone/solid";
 import { error, setError, setIsAuthenticated } from "../../public/js/store.js";
 import { A } from "@solidjs/router";
 import { createEffect } from "solid-js";
+import { baseURL } from "../api/fetchGet.js";
 
 const Login = () => {
   let loginBtn;

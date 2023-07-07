@@ -4,6 +4,7 @@ import { error, setError } from "../../public/js/store.js";
 import { useNavigate } from "@solidjs/router";
 import { A } from "@solidjs/router";
 import { createSignal } from "solid-js";
+import { baseURL } from "../api/fetchGet.js";
 
 const Signup = () => {
   let signUpBtn;
