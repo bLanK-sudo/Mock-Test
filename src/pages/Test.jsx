@@ -22,7 +22,7 @@ const Test = (id) => {
   const [qnId, setqnId] = createSignal([]);
   const [result, setResult] = createSignal(null);
   const [submit, setSubmit] = createSignal(false);
-  const [start, showStart] = createSignal(false);
+  const [start, showStart] = createSignal(true);
   const [all, setAll] = createSignal(false);
   const [completed, setCompleted] = createSignal(0);
   const [notCompleted, setNotCompleted] = createSignal(0);
@@ -73,15 +73,47 @@ const Test = (id) => {
     <>
       <NavBar />
       {start() && (
-        <div class="fixed inset-0 w-screen m-auto h-screen bg-accent z-10 text-xl">
-          <div class="flex flex-col justify-center items-center h-full">
-            <p class="p-4">This is just a page before ur test.</p>
-            <p class="p-4"> Where you wait until ur test data loads</p>
-            <div class="">
-              <Show when={test()} fallback={<p>Loading.....</p>}>
-                <div class="">
+        <div class="fixed top-0 w-screen flex justify-center overflow-scroll items-center min-h-screen bg-accent z-10 text-xl">
+          <div class="card w-max bg-neutral text-neutral-content m-4">
+            <h2 class="text-2xl font-archivo p-4">Instructions</h2>
+            <hr class="border border-accent" />
+            <div class="card-body ">
+              <p class="text-base max-w-[600px]">
+                Do not worry if it takes some time for the button to load. It
+                might take a longer time due to higher network traffic. If it
+                takes very long time check for any console messages. Or contact
+                us
+              </p>
+              <ul class="list list-disc text-base p-4">
+                <li>
+                  You have the exam time on the top right corner of the page
+                </li>
+                <li>
+                  If a question button is red then it means that your answer is
+                  not saved
+                </li>
+                <li>Save the answer everytime you change it</li>
+                <li>
+                  Check for the button colors to make sure you have answered
+                  everything
+                </li>
+                <li>
+                  There are no calculators in this webpage. Use your own
+                  calculators
+                </li>
+              </ul>
+
+              <div class="card-actions justify-end">
+                <Show
+                  when={test()}
+                  fallback={
+                    <>
+                      <div class="flex flex-col justify-center items-start gap-4 cursor-pointer">
+                        <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                      </div>
+                    </>
+                  }>
                   <button
-                    class="btn"
                     onClick={(el) => {
                       setCurrentQn(qnId()[0]);
                       setStartTimer(Date.now());
@@ -89,11 +121,12 @@ const Test = (id) => {
                       document
                         .getElementsByName(qnId()[0])[0]
                         .classList.add("bg-error", "text-error-content");
-                    }}>
-                    START THE TEST
+                    }}
+                    class="btn btn-accent">
+                    Start Test
                   </button>
-                </div>
-              </Show>
+                </Show>
+              </div>
             </div>
           </div>
         </div>
@@ -107,7 +140,15 @@ const Test = (id) => {
         </div>
       </div>
       <div class="flex flex-col lg:grid lg:grid-cols-3 mb-24">
-        <Show when={test()} fallback={<>Loading....</>}>
+        <Show
+          when={test()}
+          fallback={
+            <>
+              <div class="col-span-2 h-36 flex justify-center font-archivo m-2 bg-base-300 items-center gap-4 animate-pulse rounded-xl">
+                <p>Content is still Loading...</p>
+              </div>
+            </>
+          }>
           <For each={test().questions}>
             {(qn, i) => {
               return (
@@ -132,7 +173,10 @@ const Test = (id) => {
                               {(img) => {
                                 return (
                                   <>
-                                    <img src={img} class="cursor-pointer p-2 bg-white rounded-lg" />
+                                    <img
+                                      src={img}
+                                      class="cursor-pointer p-2 bg-white rounded-lg"
+                                    />
                                   </>
                                 );
                               }}
@@ -361,7 +405,9 @@ const Test = (id) => {
                         <button
                           id={"save" + qn.qn_no}
                           onClick={(e) => {
-                            let ans = document.getElementById(`form${qn.qn_no}`);
+                            let ans = document.getElementById(
+                              `form${qn.qn_no}`
+                            );
                             console.log(ans);
                             let ansArr;
 
@@ -455,19 +501,31 @@ const Test = (id) => {
             }}
           </For>
         </Show>
-        <div class="card m-2 bg-base-300 col-span-1">
-          <h2 class="p-4">Question Numbers</h2>
-          <hr class="border border-accent" />
-          <div class="card-body justify-between">
-            <div class="grid grid-cols-4 gap-4">
-              <Show
-                when={qnId()}
-                fallback={
-                  <>
-                    <p>Hello World</p>
-                  </>
-                }>
-                <Show when={test()}>
+
+        <Show
+          when={qnId()}
+          fallback={
+            <>
+              <div class="col-span-1 justify-center items-start gap-4">
+                <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
+              </div>
+            </>
+          }>
+          <Show
+            when={test()}
+            fallback={
+              <>
+                <div class="col-span-1 h-36 flex justify-center font-archivo m-2 bg-base-300 items-center gap-4 animate-pulse rounded-xl">
+                  <p>Content is still Loading...</p>
+                </div>
+              </>
+            }>
+            <div class="card m-2 bg-base-300 col-span-1">
+              <h2 class="p-4">Question Numbers</h2>
+              <hr class="border border-accent" />
+              <div class="card-body justify-between">
+                <div class="grid grid-cols-4 gap-4">
                   <For each={qnId()}>
                     {(id, i) => {
                       return (
@@ -504,28 +562,28 @@ const Test = (id) => {
                       );
                     }}
                   </For>
-                </Show>
-              </Show>
+                </div>
+                <div class="card-actions justify-end">
+                  <button
+                    class={`btn px-16 ${all() ? "bg-success" : "bg-error"}`}
+                    onClick={() => {
+                      fullTime = Date.now() - startingTime;
+                      setSubmit(true);
+                      if (timer[currentQn()]) {
+                        timer[currentQn()] += Date.now() - startTimer();
+                      } else {
+                        timer[currentQn()] = Date.now() - startTimer();
+                      }
+                      fetchAns(setResult, test, selected);
+                      console.log(selected);
+                    }}>
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="card-actions justify-end">
-              <button
-                class={`btn px-16 ${all() ? "bg-success" : "bg-error"}`}
-                onClick={() => {
-                  fullTime = Date.now() - startingTime;
-                  setSubmit(true);
-                  if (timer[currentQn()]) {
-                    timer[currentQn()] += Date.now() - startTimer();
-                  } else {
-                    timer[currentQn()] = Date.now() - startTimer();
-                  }
-                  fetchAns(setResult, test, selected);
-                  console.log(selected);
-                }}>
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
+          </Show>
+        </Show>
       </div>
       {submit() && (
         <div className="absolute inset-0 z-0 flex justify-center items-center bg-accent">

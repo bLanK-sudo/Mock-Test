@@ -52,7 +52,7 @@ export const fetchUser = async () => {
 //   }
 
 export const fetchTest = async (setqnId, setTest, test, qn) => {
-    const response = await fetch("http://localhost:3000/SWTesting", {
+    const response = await fetch("http://localhost:5000/SWTesting", {
     method: "GET",
     headers: {
         "Content-Type": "application/json",
