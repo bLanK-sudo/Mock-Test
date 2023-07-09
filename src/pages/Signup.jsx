@@ -179,16 +179,12 @@ const Signup = () => {
                           bio: document.getElementById("bio").value,
                         }),
                       });
-                      console.log(response);
                       const data = await response.json();
                       if (!response.ok) {
                         signUpBtn.innerHTML = "Sign Up";
-                        console.log(data.message[0]);
                         setError(data.message);
                       } else {
-                        console.log(data);
                         if (data) {
-                          console.log("working");
                           navigate("/login", { replace: true });
                         }
                         setError(data.message);

@@ -17,6 +17,8 @@ import Donate from './pages/Donate';
 import Subjects from './pages/Subjects';
 import Exams from './pages/Exams';
 import Forgot from './pages/Forgot';
+import Report from './pages/Report';
+import FeedBack from './pages/Feedback';
 
 
 
@@ -34,28 +36,29 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 
 render(
-  () =>( 
-  <Router>
-    <Routes>
-      <Route path="*" component={Page404} />
-      <Route path="/" component={Landing} />
-      <Route path="/login" component={Login} />
-      <Route path="/forgot_pwd" component={Forgot} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/home" component={App} />
-      <Route path="/about" component={About} />
-      <Route path="/mock" component={Mock} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/test/:id" component={Test} />
-      <Route path="/contact" component={Contact} />
-      <Route path="/donate" component={Donate} />
-      <Route path="/subjects" component={Subjects} />
-      <Route path="/subjects/:id" component={Subjects} />
-      <Route path="/exams" component={Exams} />
-      <Route path="/exams/:id" component={Exams} />
-    </Routes>
-  </Router>
-  
-  ), 
+  () => (
+    <Router>
+      <Routes>
+        <Route path="*" component={Page404} />
+        <Route path="/" component={Landing} />
+        <Route path="/login" component={Login} />
+        <Route path="/forgot_pwd" component={Forgot} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/home" component={App} />
+        <Route path="/about" component={About} />
+        <Route path="/mock" component={Mock} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/test/:id" component={Test} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/donate" component={Donate} />
+        <Route path="/report" component={Report} />
+        <Route path="/feedback" component={FeedBack} />
+        <Route path="/subjects" component={Subjects} />
+        <Route path="/subjects/:id" component={Subjects} />
+        <Route path="/exams" component={Exams} />
+        <Route path="/exams/:id" component={Exams} />
+      </Routes>
+    </Router>
+  ),
   root
-  );
+);

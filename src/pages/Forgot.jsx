@@ -1,4 +1,4 @@
-import { BsCheckCircleFill } from "solid-icons/bs";
+
 import NavBar from "../components/NavBar";
 import { error, setError } from "../../public/js/store";
 import { createEffect } from "solid-js";
@@ -58,16 +58,13 @@ const Forgot = () => {
                         email: document.getElementById("email").value,
                       }),
                     });
-                    console.log("clicking");
 
                     const data = await response.json();
                     if (!response.ok) {
                       el.target.innerHTML = "Send OTP";
                       setError(data.detail);
-                      console.log(response);
                     }
                     if (data) {
-                      console.log(data);
                       email.classList.add("hidden");
                       verifyOtp.classList.remove("hidden");
                       steps.children[0].setAttribute("data-content", "✓");
@@ -115,7 +112,6 @@ const Forgot = () => {
                     if (!response.ok) {
                       setError(data.detail);
                       el.target.innerHTML = "Verify OTP";
-                      console.log(response);
                       return useNavigate("/login", { replace: true });
                     }
                     if (data && response.ok) {
@@ -123,7 +119,6 @@ const Forgot = () => {
                       changePWD.classList.remove("hidden");
                       steps.children[1].setAttribute("data-content", "✓");
                       steps.children[2].classList.add("step-accent");
-                      console.log(data);
                     }
                   } catch (err) {
                     el.target.innerHTML = "Verify OTP";
@@ -167,10 +162,8 @@ const Forgot = () => {
                     if (!response.ok) {
                       el.target.innerHTML = "Change Password";
                       setError(data.message);
-                      console.log(response);
                     }
                     if (data && response.ok) {
-                      console.log(data);
                       steps.children[0].setAttribute("data-content", "✓");
                       steps.children[1].classList.add("step-accent");
                       setError(data.message);

@@ -35,7 +35,6 @@ const About = () => {
             <span class="cursor-pointer">Abulaman</span>
           </p>
           <p>got no life {`->`} yes </p>
-          <p>decided {`->`} ????</p>
         </div>
       </Motion>
     </>

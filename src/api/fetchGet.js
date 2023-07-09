@@ -64,7 +64,6 @@ export const fetchTest = async (setqnId, setTest, test, qn) => {
     }else{
         if(data) {
             setTest(data[0])
-            console.log(data);
         }
     }
     for (let i = 0; i < test().questions.length; i++) {
@@ -87,6 +86,5 @@ export const fetchAns = async (setResult, test, selected) => {
     const data = await response.json()
     if(data) {
         setResult(data)
-        console.log(data);
     }
 }

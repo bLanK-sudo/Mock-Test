@@ -3,6 +3,7 @@ import { fetchAns, fetchTest } from "../api/fetchGet";
 import NavBar from "../components/NavBar";
 import { Show, createSignal } from "solid-js";
 import { isAuthenticated, setError } from "../../public/js/store";
+import Correct from "../components/Correct";
 
 const qnType = (e) => {
   if (e == "SCQ") return "radio";
@@ -13,6 +14,7 @@ const qnType = (e) => {
 };
 
 const Test = (id) => {
+  const [preview, setPreview] = createSignal(false);
   const navigate = useNavigate();
   if (!isAuthenticated()) {
     setError("You are not logged in!!");
@@ -122,7 +124,7 @@ const Test = (id) => {
                         .getElementsByName(qnId()[0])[0]
                         .classList.add("bg-error", "text-error-content");
                     }}
-                    class="btn btn-accent">
+                    class="badge badge-accent p-4 px-8">
                     Start Test
                   </button>
                 </Show>
@@ -215,7 +217,6 @@ const Test = (id) => {
                                       "bg-error",
                                       "text-error-content"
                                     );
-                                  console.log("ur reverting");
                                 }}
                                 name={"q" + qn.qn_no}
                                 id={qn.id}
@@ -247,7 +248,6 @@ const Test = (id) => {
                                       "bg-error",
                                       "text-error-content"
                                     );
-                                  console.log("ur reverting");
                                 }}
                                 name={"q" + qn.qn_no}
                                 id={qn.qn_no}
@@ -408,7 +408,6 @@ const Test = (id) => {
                             let ans = document.getElementById(
                               `form${qn.qn_no}`
                             );
-                            console.log(ans);
                             let ansArr;
 
                             if (qn.type == "Text") {
@@ -421,7 +420,6 @@ const Test = (id) => {
                               ansArr = [];
                               Object.values(ans.children).forEach((el) => {
                                 if (el.childNodes[0].checked) {
-                                  console.log(el.childNodes[0]);
                                   ansArr.push(el.childNodes[0].value);
                                 }
                               });
@@ -554,7 +552,6 @@ const Test = (id) => {
                               } else if (selected[id].length == 0) {
                                 el.target.classList.add("bg-error");
                               }
-                              console.log(selected);
                             }}>
                             {i() + 1}
                           </button>
@@ -575,7 +572,6 @@ const Test = (id) => {
                         timer[currentQn()] = Date.now() - startTimer();
                       }
                       fetchAns(setResult, test, selected);
-                      console.log(selected);
                     }}>
                     Submit
                   </button>
@@ -586,19 +582,36 @@ const Test = (id) => {
         </Show>
       </div>
       {submit() && (
-        <div className="absolute inset-0 z-0 flex justify-center items-center bg-accent">
+        <div className="fixed inset-0 z-0 flex justify-center items-center bg-accent">
           {Object.values(selected).forEach((el) => {
             if (el.length > 0) count += 1;
           })}
-          <div class="card bg-base-100">
+          <div class="card bg-base-100 lg:min-w-[500px]">
             <h2 class="p-4">Results</h2>
             <hr class="border border-accent" />
             <div class="card-body">
               <div class="card-title flex-col items-start">
                 <p>Attempted : {count}</p>
                 <p>Not Attempted : {qnId().length - count} </p>
-                <p>Total Time : {msToTime(fullTime)}</p>
-
+                <p>Time Spent : {msToTime(fullTime)}</p>
+                <p class="flex justify-center items-center gap-2">
+                  <span>Preview :</span>
+                  {/* <Show
+                    when={result()}
+                    fallback={
+                      <div class="flex flex-col justify-center items-center gap-4">
+                        <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                      </div>
+                    }> */}{" "}
+                  <button
+                    onClick={() => {
+                      setPreview(!preview());
+                    }}
+                    class="badge badge-accent">
+                    Show answers
+                  </button>
+                  {/* </Show> */}
+                </p>
                 <p class="flex gap-2">
                   Score :
                   <Show
@@ -626,6 +639,20 @@ const Test = (id) => {
       )}
       {console.log("selected array: ", selected)}
       {console.log("timer: ", timer)}
+
+      <Show when={test()}>
+        {preview() && (
+          <Correct qnArr={test()}>
+            <footer
+              onClick={() => {
+                setPreview(false);
+              }}
+              class="fixed bottom-0 left-0 right-0 z-[11] w-full m-auto">
+              <button class="btn btn-accent w-full rounded-none">CLOSE</button>
+            </footer>
+          </Correct>
+        )}
+      </Show>
     </>
   );
 };

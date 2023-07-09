@@ -80,7 +80,7 @@ const Mock = () => {
                         return (
                           <A
                             href={`/subjects/${course.id}`}
-                            class="btn w-max px-8">
+                            class="badge p-4 md:btn w-max px-8">
                             {course.name}
                           </A>
                         );
@@ -102,13 +102,13 @@ const Mock = () => {
               <hr class="border border-accent-content" />
               <div class="card-body">
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                  <A href="/exams/q1" class="btn w-full">
+                  <A href="/exams/q1" class="badge p-4 md:btn w-full">
                     Quiz 1
                   </A>
-                  <A href="/exams/q2" class="btn w-full">
+                  <A href="/exams/q2" class="badge p-4 md:btn w-full">
                     Quiz 2
                   </A>
-                  <A href="/exams/endterm" class="btn w-full">
+                  <A href="/exams/endterm" class="badge p-4 md:btn w-full">
                     End Term
                   </A>
                 </div>

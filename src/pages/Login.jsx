@@ -54,10 +54,6 @@ const Login = () => {
                   ref={loginBtn}
                   class="btn btn-accent w-full"
                   onClick={async () => {
-                    console.log(
-                      document.getElementById("email").value,
-                      document.getElementById("pwd").value
-                    );
                     try {
                       loginBtn.innerHTML =
                         "<div class='loading loading-spinner loading-sm'></div> Logging In...";
@@ -80,7 +76,6 @@ const Login = () => {
                         localStorage.setItem("token", data.access);
                         localStorage.setItem("authenticated", "true");
                         navigate("/home", { replace: true });
-                        console.log(data);
                       }
                     } catch (err) {
                       console.log(err);

@@ -13,13 +13,13 @@ import {
 const App = () => {
   
   const navigate = useNavigate();
-
+  fetchUser();
   //? Check if user is authenticated. If not redirect to login page
   if (!isAuthenticated()) {
     setError("You are not logged in!!");
     return navigate("/login", { replace: true });
   }
-  fetchUser();
+  
   return (
     <>
       <Motion
@@ -36,7 +36,7 @@ const App = () => {
                   fallback={
                     <>
                       <div class="flex flex-col justify-center items-center gap-4">
-                        <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                        <span class="h-8 w-32 md:w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
                       </div>
                     </>
                   }>
@@ -44,13 +44,15 @@ const App = () => {
                   {user().username}
                 </Show>
               </div>
-              {/* //!Change Content */}
               <p class="pl-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perferendis, natus.
+                Welcome to Mock Test App, take a mock test and ace your exams.
               </p>
+
               <div class="card-actions justify-end">
-                <A href="/mock" class="btn">
+                <A href="/mock" class="badge p-4 md:btn">
+                  Upcoming Features
+                </A>
+                <A href="/mock" class="badge p-4 md:btn">
                   Attempt Mock
                 </A>
               </div>
@@ -63,7 +65,6 @@ const App = () => {
               </h2>
               <hr class="border border-accent-content" />
               <div class="card-body">
-                {/* //!Change Content */}
                 <p class="">
                   Welcome to Mock Test App, the go-to platform for IIT Madras
                   Online Degree Program students to ace their exams. We
@@ -83,10 +84,10 @@ const App = () => {
               </h2>
               <hr class="border border-accent-content" />
               <div class="card-body">
-                {/* //!Change Content */}
                 <p class="pl-2">
                   We would love to hear your FeedBack on our website. If you
-                  want to report an error, visit the Contact page or click on view more below.
+                  want to report an error, visit the Contact page or click on
+                  view more below.
                 </p>
                 <div class="card-actions justify-end">
                   <A href="/contact" class="link">
@@ -95,6 +96,14 @@ const App = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div class="m-2 p-4 badge badge-accent text-accent-content">
+            Look what others have to say about our website
+            <p class="pl-1">
+              <A class="link" href="/feedback">
+                here
+              </A>
+            </p>
           </div>
         </div>
       </Motion>

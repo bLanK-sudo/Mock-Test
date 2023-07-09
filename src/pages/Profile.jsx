@@ -14,7 +14,13 @@ const Profile = () => {
         <div class="flex flex-col mb-24">
           <div class="h-[40vh] card m-2 relative bg-[url(/images/try.webp)] bg-cover bg-no-repeat">
             <div class="absolute -bottom-24 flex justify-center items-center rounded-full left-0 right-0 m-auto w-48 h-48 bg-base-100">
-              <Show when={user()}>
+              <Show
+                when={user()}
+                fallback={
+                  <>
+                    <div class="w-[80%] h-[80%] rounded-full bg-base-300 animate-pulse"></div>
+                  </>
+                }>
                 <img src={user().dp} class="w-[10rem] h-[10rem]" alt="" />
               </Show>
               <dialog id="pfp" class="modal">
@@ -43,9 +49,9 @@ const Profile = () => {
             when={user()}
             fallback={
               <>
-                <div class="flex flex-col justify-center items-center gap-4">
-                  <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
-                  <span class="h-8 w-24 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                <div class="flex flex-col justify-center items-center gap-4 p-4 pt-32">
+                  <span class="h-8 w-48 md:w-56 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                  <span class="h-8 w-32 inline-block bg-base-300 rounded-full animate-pulse"></span>
                 </div>
               </>
             }>
@@ -56,8 +62,8 @@ const Profile = () => {
                   <p
                     style="font-variant:small-caps;"
                     class="font-montserrat font-light ">
-                        {user().courses[0].level.name.toLowerCase()}
-                    </p>
+                    {user().courses[0].level.name.toLowerCase()}
+                  </p>
                 </Show>
               </Show>
               <div class="relative">
@@ -100,7 +106,7 @@ const Profile = () => {
               fallback={
                 <>
                   <div class="flex flex-col justify-center items-center gap-4">
-                    <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
+                    <span class="h-8 w-72 md:w-96 inline-block bg-base-300 rounded-full animate-pulse"></span>
                   </div>
                 </>
               }>
@@ -117,12 +123,20 @@ const Profile = () => {
                 <div class="flex justify-center items-center lg:justify-between flex-col lg:flex-row gap-4">
                   <h1 class="font-bold text-4xl w-max">Subjects Picked</h1>
                   <div class="flex gap-2 flex-wrap  justify-center items-center">
-                    <Show when={user().courses} fallback={<>Loading...</>}>
-                      <For each={user().courses}>
-                        {(course) => {
-                          return <A href={`/subjects/${course.id}`} class="btn">{course.name}</A>;
-                        }}
-                      </For>
+                    <Show when={user()} fallback={<>Loading...</>}>
+                      <Show when={user().courses}>
+                        <For each={user().courses}>
+                          {(course) => {
+                            return (
+                              <A
+                                href={`/subjects/${course.id}`}
+                                class="badge p-4 md:btn">
+                                {course.name}
+                              </A>
+                            );
+                          }}
+                        </For>
+                      </Show>
                     </Show>
                   </div>
                 </div>
