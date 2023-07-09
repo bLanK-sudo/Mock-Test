@@ -3,7 +3,6 @@ import {animate} from "motion"
 import { A } from '@solidjs/router';
 import { createEffect, onCleanup, onMount } from 'solid-js';
 import { setIsAuthenticated, setUser } from '../../public/js/store';
-import Logo from '../assets/logo';
 
 
 const NavBar = () => {
