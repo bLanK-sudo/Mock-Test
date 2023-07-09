@@ -562,7 +562,7 @@ const Test = (id) => {
                 </div>
                 <div class="card-actions justify-end">
                   <button
-                    class={`btn px-16 ${all() ? "bg-success" : "bg-error"}`}
+                    class={`btn px-16 ${all() ? "bg-success text-white" : "bg-error text-black"}`}
                     onClick={() => {
                       fullTime = Date.now() - startingTime;
                       setSubmit(true);

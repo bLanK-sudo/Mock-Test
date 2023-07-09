@@ -49,7 +49,7 @@ const App = () => {
               </p>
 
               <div class="card-actions justify-end">
-                <A href="/mock" class="badge p-4 md:btn">
+                <A href="/features" class="badge p-4 md:btn">
                   Upcoming Features
                 </A>
                 <A href="/mock" class="badge p-4 md:btn">

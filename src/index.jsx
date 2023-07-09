@@ -19,6 +19,7 @@ import Exams from './pages/Exams';
 import Forgot from './pages/Forgot';
 import Report from './pages/Report';
 import FeedBack from './pages/Feedback';
+import Features from './pages/Features';
 
 
 
@@ -53,6 +54,7 @@ render(
         <Route path="/donate" component={Donate} />
         <Route path="/report" component={Report} />
         <Route path="/feedback" component={FeedBack} />
+        <Route path="/features" component={Features} />
         <Route path="/subjects" component={Subjects} />
         <Route path="/subjects/:id" component={Subjects} />
         <Route path="/exams" component={Exams} />
