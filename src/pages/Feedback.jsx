@@ -1,6 +1,9 @@
 import NavBar from "../components/NavBar";
 
 const FeedBack = () => {
+
+  document.title = "FeedBacks";
+
   return (
     <>
       <NavBar />

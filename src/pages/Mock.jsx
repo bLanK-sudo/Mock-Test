@@ -10,12 +10,12 @@ import {
 import { fetchUser } from "../api/fetchGet";
 
 const Mock = () => {
+  document.title = "Mock";
   const navigate = useNavigate();
   if (!isAuthenticated()) {
     setError("You are not logged in!!");
     return navigate("/login", { replace: true });
   }
-  fetchUser();
   return (
     <>
       <Motion
@@ -31,8 +31,8 @@ const Mock = () => {
                 fallback={
                   <>
                     <div class="grid grid-cols-1 md:grid-cols-2 w-full h-full justify-center items-center gap-4">
-                      <span class="h-32 w-full inline-block bg-base-300 rounded-full animate-pulse"></span>
-                      <span class="h-32 w-full inline-block bg-base-300 rounded-full animate-pulse"></span>
+                      <span class="h-32 w-full inline-block bg-base-300 rounded-xl animate-pulse"></span>
+                      <span class="h-32 w-full inline-block bg-base-300 rounded-xl animate-pulse"></span>
                     </div>
                   </>
                 }>
@@ -45,7 +45,7 @@ const Mock = () => {
                           <div class="card-actions justify-end">
                             <a
                               href={`/test/${course.id}`}
-                              class="link link-accent">
+                              class="link">
                               Attempt Mock
                             </a>
                           </div>
@@ -68,7 +68,7 @@ const Mock = () => {
                   when={user()}
                   fallback={
                     <>
-                      <div class="flex flex-col justify-center items-start gap-4">
+                      <div class="flex flex-wrap justify-start  items-start gap-4">
                         <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
                         <span class="h-8 w-48 inline-block bg-base-300 rounded-full animate-pulse"></span>
                       </div>
@@ -110,11 +110,6 @@ const Mock = () => {
                   </A>
                   <A href="/exams/endterm" class="badge p-4 md:btn w-full">
                     End Term
-                  </A>
-                </div>
-                <div class="card-actions justify-end">
-                  <A href="/exams" class="link">
-                    View More
                   </A>
                 </div>
               </div>

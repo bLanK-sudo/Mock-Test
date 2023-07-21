@@ -7,6 +7,9 @@ import { createSignal } from "solid-js";
 import { baseURL } from "../api/fetchGet.js";
 
 const Signup = () => {
+
+  document.title = "Signup";
+
   let signUpBtn;
   const selectedCourses = createMutable([]);
   const navigate = useNavigate();
@@ -27,6 +30,7 @@ const Signup = () => {
   fetchCourses();
 
   const setonclick = (el) => {
+    console.log(selectedCourses);
     let flag = true;
     for (let i = 0; i < selectedCourses.length; i++) {
       if (selectedCourses[i][0] == el.target.value) {
@@ -37,8 +41,10 @@ const Signup = () => {
     if (flag) {
       let val = el.target.value;
       let name = el.target.selectedOptions[0].innerText;
-      selectedCourses.push([val, name]);
+      if(selectedCourses.length < 4) {selectedCourses.push([val, name])}
+      else setError("You can only select a maximum of 4 courses")
     }
+    el.target.value = "";
   };
 
   return (
@@ -94,7 +100,11 @@ const Signup = () => {
                   <option value="diploma">Diploma</option>
                   <option value="degree">Degree</option>
                 </select>
-                <Show when={courses()} fallback={<></>}>
+                <Show when={courses()} fallback={
+                  <>
+                    <option value="loading">Loading...</option>
+                  </>
+                }>
                   <label htmlFor="courses">Select courses</label>
                   <select
                     onChange={(el) => {
@@ -190,7 +200,7 @@ const Signup = () => {
                         setError(data.message);
                       }
                     } catch (err) {
-                      console.log(err);
+                      setError("Something went wrong");
                     }
                   }}>
                   Sign Up

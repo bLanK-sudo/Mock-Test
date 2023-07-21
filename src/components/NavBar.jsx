@@ -1,12 +1,13 @@
-import { BsArrowDownCircleFill} from 'solid-icons/bs'
+import { BsArrowDownCircleFill, BsMoonFill, BsSunFill} from 'solid-icons/bs'
 import {animate} from "motion"
 import { A } from '@solidjs/router';
-import { createEffect, onCleanup, onMount } from 'solid-js';
+import {createSignal } from 'solid-js';
 import { setIsAuthenticated, setUser } from '../../public/js/store';
 
 
 const NavBar = () => {
-  document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "retro")
+  const [selected, setSelected] = createSignal(localStorage.getItem("theme") || "black")
+  console.log("he",selected());
   let centerNav;
     return (
       <>
@@ -56,80 +57,13 @@ const NavBar = () => {
                       data-set-theme=""
                       data-act-class="ACTIVECLASS"></button>
                     <button
-                      class="btn"
+                      class={`btn ${
+                        selected() == "cupcake"
+                          ? "border-2 border-accent"
+                          : ""
+                      }`}
                       onClick={() => {
-                        document.documentElement.removeAttribute("data-theme");
-                        document.documentElement.setAttribute(
-                          "data-theme",
-                          "light"
-                        );
-                        localStorage.setItem("theme", "light");
-                      }}>
-                      Light
-                    </button>
-                    <button
-                      class="btn"
-                      onClick={() => {
-                        document.documentElement.removeAttribute("data-theme");
-                        document.documentElement.setAttribute(
-                          "data-theme",
-                          "lofi"
-                        );
-                        localStorage.setItem("theme", "lofi");
-                      }}>
-                      Lofi
-                    </button>
-                    <button
-                      class="btn"
-                      onClick={() => {
-                        document.documentElement.removeAttribute("data-theme");
-                        document.documentElement.setAttribute(
-                          "data-theme",
-                          "dark"
-                        );
-                        localStorage.setItem("theme", "dark");
-                      }}>
-                      Night
-                    </button>
-                    <button
-                      class="btn"
-                      onClick={() => {
-                        document.documentElement.removeAttribute("data-theme");
-                        document.documentElement.setAttribute(
-                          "data-theme",
-                          "dracula"
-                        );
-                        localStorage.setItem("theme", "dracula");
-                      }}>
-                      Dracula
-                    </button>
-                    <button
-                      class="btn"
-                      onClick={() => {
-                        document.documentElement.removeAttribute("data-theme");
-                        document.documentElement.setAttribute(
-                          "data-theme",
-                          "forest"
-                        );
-                        localStorage.setItem("theme", "forest");
-                      }}>
-                      Forest
-                    </button>
-                    <button
-                      class="btn"
-                      onClick={() => {
-                        document.documentElement.removeAttribute("data-theme");
-                        document.documentElement.setAttribute(
-                          "data-theme",
-                          "luxury"
-                        );
-                        localStorage.setItem("theme", "luxury");
-                      }}>
-                      Luxury
-                    </button>
-                    <button
-                      class="btn"
-                      onClick={() => {
+                        setSelected("cupcake");
                         document.documentElement.removeAttribute("data-theme");
                         document.documentElement.setAttribute(
                           "data-theme",
@@ -137,11 +71,59 @@ const NavBar = () => {
                         );
                         localStorage.setItem("theme", "cupcake");
                       }}>
-                      CupCake
+                      Light <BsSunFill />
                     </button>
                     <button
-                      class="btn"
+                      class={`btn ${
+                        selected() == "black" ? "border-2 border-accent" : ""
+                      }`}
                       onClick={() => {
+                        setSelected("black");
+                        document.documentElement.removeAttribute("data-theme");
+                        document.documentElement.setAttribute(
+                          "data-theme",
+                          "black"
+                        );
+                        localStorage.setItem("theme", "black");
+                      }}>
+                      Dark <BsMoonFill />
+                    </button>
+                    <button
+                      class={`btn ${
+                        selected() == "forest" ? "border-2 border-accent" : ""
+                      }`}
+                      onClick={() => {
+                        setSelected("forest");
+                        document.documentElement.removeAttribute("data-theme");
+                        document.documentElement.setAttribute(
+                          "data-theme",
+                          "forest"
+                        );
+                        localStorage.setItem("theme", "forest");
+                      }}>
+                      Forest <BsMoonFill />
+                    </button>
+                    <button
+                      class={`btn ${
+                        selected() == "luxury" ? "border-2 border-accent" : ""
+                      }`}
+                      onClick={() => {
+                        setSelected("luxury");
+                        document.documentElement.removeAttribute("data-theme");
+                        document.documentElement.setAttribute(
+                          "data-theme",
+                          "luxury"
+                        );
+                        localStorage.setItem("theme", "luxury");
+                      }}>
+                      Luxury <BsMoonFill />
+                    </button>
+                    <button
+                      class={`btn ${
+                        selected() == "retro" ? "border-2 border-accent" : ""
+                      }`}
+                      onClick={() => {
+                        setSelected("retro");
                         document.documentElement.removeAttribute("data-theme");
                         document.documentElement.setAttribute(
                           "data-theme",
@@ -149,11 +131,16 @@ const NavBar = () => {
                         );
                         localStorage.setItem("theme", "retro");
                       }}>
-                      Retro
+                      Retro <BsSunFill />
                     </button>
                     <button
-                      class="btn"
+                      class={`btn ${
+                        selected() == "synthwave"
+                          ? "border-2 border-accent"
+                          : ""
+                      }`}
                       onClick={() => {
+                        setSelected("synthwave");
                         document.documentElement.removeAttribute("data-theme");
                         document.documentElement.setAttribute(
                           "data-theme",
@@ -161,7 +148,22 @@ const NavBar = () => {
                         );
                         localStorage.setItem("theme", "synthwave");
                       }}>
-                      Synthwave
+                      Synthwave <BsMoonFill />
+                    </button>
+                    <button
+                      class={`btn ${
+                        selected() == "business" ? "border-2 border-accent" : ""
+                      }`}
+                      onClick={() => {
+                        setSelected("business");
+                        document.documentElement.removeAttribute("data-theme");
+                        document.documentElement.setAttribute(
+                          "data-theme",
+                          "business"
+                        );
+                        localStorage.setItem("theme", "business");
+                      }}>
+                      Business <BsMoonFill />
                     </button>
                   </ul>
                 </div>

@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import { isAuthenticated, setError } from "../../public/js/store";
 
 const About = () => {
+  document.title = "About Us";
   const navigate = useNavigate();
 
   //? Check if user is authenticated. If not redirect to login page

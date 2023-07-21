@@ -6,6 +6,9 @@ import { Motion } from "@motionone/solid"
 
 
 const PageNotFound = () => {
+
+    document.title = "404"
+
     return (
         <Motion animate={{opacity:[0, 1]}} transition={{ duration: .7, easing: "ease-in-out" }}>
         <div class="h-screen w-screen flex justify-center items-center">

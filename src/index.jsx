@@ -1,10 +1,9 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
 import '../public/css/output.css'
-import App from './pages/App';
+import Home from './pages/Home';
 import Mock from './pages/Mock';
 import Page404 from './pages/Page404';
-import { onMount } from 'solid-js'
 import { Router, Route, Routes } from "@solidjs/router";
 import Profile from './pages/Profile';
 import Test from './pages/Test';
@@ -20,6 +19,8 @@ import Forgot from './pages/Forgot';
 import Report from './pages/Report';
 import FeedBack from './pages/Feedback';
 import Features from './pages/Features';
+import Solved from './pages/Solved';
+import SubjectCategory from './pages/SubjectCategory';
 
 
 
@@ -45,7 +46,7 @@ render(
         <Route path="/login" component={Login} />
         <Route path="/forgot_pwd" component={Forgot} />
         <Route path="/signup" component={Signup} />
-        <Route path="/home" component={App} />
+        <Route path="/home" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/mock" component={Mock} />
         <Route path="/profile" component={Profile} />
@@ -53,11 +54,11 @@ render(
         <Route path="/contact" component={Contact} />
         <Route path="/donate" component={Donate} />
         <Route path="/report" component={Report} />
+        <Route path="/solved" component={Solved} />
         <Route path="/feedback" component={FeedBack} />
         <Route path="/features" component={Features} />
         <Route path="/subjects" component={Subjects} />
-        <Route path="/subjects/:id" component={Subjects} />
-        <Route path="/exams" component={Exams} />
+        <Route path="/subjects/:id" component={SubjectCategory} />
         <Route path="/exams/:id" component={Exams} />
       </Routes>
     </Router>

@@ -2,7 +2,6 @@ import { Motion } from "@motionone/solid";
 import { A } from "@solidjs/router";
 
 const Landing = () => {
-
     return (
         <Motion animate={{opacity:[0, 1]}} transition={{ duration: .7, easing: "ease-in-out" }}>
 
@@ -15,7 +14,7 @@ const Landing = () => {
                 <p class="text-center p-4 badge shadow">Landing page is still under construction</p>
             </div>
             <div className="flex gap-16">
-                <A href="/login" class="badge badge-warning p-4 md:btn md:btn-warning px-8">Login</A>
+                <A href="/login" class="badge badge-warning p-4 md:btn md:btn-success px-8">Login</A>
                 <A href="/signup" class="badge badge-info p-4 md:btn md:btn-info px-8">SignUp</A>
             </div>
         </div>

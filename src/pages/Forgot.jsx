@@ -6,6 +6,9 @@ import { useNavigate } from "@solidjs/router";
 import { baseURL } from "../api/fetchGet";
 
 const Forgot = () => {
+
+  document.title = "Forgot Password";
+
   const ValidateEmail = (input) => {
     var validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;

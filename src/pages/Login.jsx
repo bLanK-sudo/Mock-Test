@@ -6,6 +6,7 @@ import { createEffect } from "solid-js";
 import { baseURL } from "../api/fetchGet.js";
 
 const Login = () => {
+  document.title = "Login";
   let loginBtn;
   const navigate = useNavigate();
   createEffect(() => {
