@@ -1,41 +1,37 @@
 /* @refresh reload */
-import { render } from 'solid-js/web';
-import '../public/css/output.css'
-import Home from './pages/Home';
-import Mock from './pages/Mock';
-import Page404 from './pages/Page404';
+import { render } from "solid-js/web";
+import "../public/css/output.css";
+import Home from "./pages/Home";
+import Mock from "./pages/Mock";
+import Page404 from "./pages/Page404";
 import { Router, Route, Routes } from "@solidjs/router";
-import Profile from './pages/Profile';
-import Test from './pages/Test';
-import Landing from './pages/Landing';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Donate from './pages/Donate';
-import Subjects from './pages/Subjects';
-import Exams from './pages/Exams';
-import Forgot from './pages/Forgot';
-import Report from './pages/Report';
-import FeedBack from './pages/Feedback';
-import Features from './pages/Features';
-import Solved from './pages/Solved';
-import SubjectCategory from './pages/SubjectCategory';
+import Profile from "./pages/Profile";
+import Test from "./pages/Test";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Donate from "./pages/Donate";
+import Subjects from "./pages/Subjects";
+import Exams from "./pages/Exams";
+import Forgot from "./pages/Forgot";
+import Report from "./pages/Report";
+import FeedBack from "./pages/Feedback";
+import Features from "./pages/Features";
+import Solved from "./pages/Solved";
+import SubjectCategory from "./pages/SubjectCategory";
+import { inject } from "@vercel/analytics";
 
+inject();
 
-
-
-
-
-const root = document.getElementById('root');
+const root = document.getElementById("root");
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   throw new Error(
-    'Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got mispelled?',
+    "Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got mispelled?"
   );
 }
-
-
 
 render(
   () => (
